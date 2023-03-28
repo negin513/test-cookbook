@@ -16,6 +16,8 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     defaults:
       run:
         shell: bash -l {0}
@@ -48,8 +50,8 @@ jobs:
           (github.ref == 'refs/heads/main'
           && inputs.cname == 'None')
         with:
-          #github_token: ${{ secrets.GITHUB_TOKEN }}
-          deploy_key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          #deploy_key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
           publish_dir: _build/html
           enable_jekyll: false
           keep_files: true  # This preserves existing previews from open PRs
@@ -61,7 +63,7 @@ jobs:
           (github.ref == 'refs/heads/main'
           && inputs.cname != 'None')
         with:
-          #github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           deploy_key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
           publish_dir: _build/html
           enable_jekyll: false
